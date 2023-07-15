@@ -6,7 +6,7 @@ interface TaskCardProps {
 }
 const TaskCard = ({ title, description }: TaskCardProps) => {
   return (
-    <div className="bg-white rounded-lg shadow-md p-4 w-1/4">
+    <div className="bg-white rounded-lg shadow-md mt-4 p-4 w-1/4">
       <h2 className="text-xl  mb-2">{title}</h2>
       <p className="text-gray-600">{description}</p>
       <div className="mt-4 flex justify-center bg-white">

@@ -2,18 +2,16 @@
 import React from "react";
 import FormStore from "../../store/FormStore";
 import { observer } from "mobx-react-lite";
-import { useTasks, Task } from "@/store/Tasks";
+import { useTaskContext, Task } from "@/store/Tasks";
 import TaskCard from "../taskCard/TaskCard";
 
 const ShowTask = () => {
-  const { tasks } = useTasks();
+  const { tasks } = useTaskContext();
 
   // const {formData} = FormStore
 
-  console.log("From contextAPI : ", tasks[0]?.title);
-
   return (
-    <div className="flex justify-center m-4">
+    <div className="flex flex-col items-center justify-center m-4">
       {tasks.map((task: Task, index: number) => (
         <TaskCard
           key={index}

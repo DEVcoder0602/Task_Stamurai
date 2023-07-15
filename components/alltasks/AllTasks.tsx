@@ -5,7 +5,7 @@ import ShowTask from "../showTask/ShowTask";
 const AllTasks = () => {
   return (
     <div>
-      <CreateTask num={1} />
+      <CreateTask />
       <h3 className="text-md font-bold">All Tasks</h3>
       <ShowTask />
     </div>
