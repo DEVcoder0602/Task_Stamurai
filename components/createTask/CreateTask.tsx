@@ -103,4 +103,4 @@ const CreateTask = ({ num }: TaskProps) => {
   );
 };
 
-export default observer(CreateTask);
+export default CreateTask;
