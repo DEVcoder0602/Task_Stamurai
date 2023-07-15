@@ -2,22 +2,29 @@
 import React from "react";
 import FormStore from "../../store/FormStore";
 import { observer } from "mobx-react-lite";
-import { useTasks } from "@/store/Tasks";
+import { useTasks, Task } from "@/store/Tasks";
+import TaskCard from "../taskCard/TaskCard";
 
 const ShowTask = () => {
   const { tasks } = useTasks();
 
-  console.log("From contextstore", tasks);
-
   // const {formData} = FormStore
 
+  console.log("From contextAPI : ", tasks[0]?.title);
+
   return (
-    <div>
-      <h3>Task 1</h3>
-      <p>Title: </p>
-      <p>Title: </p>
+    <div className="flex justify-center m-4">
+      {tasks.map((task: Task, index: number) => (
+        <TaskCard
+          key={index}
+          title={task.title || ""}
+          description={task.description || ""}
+          // onEdit={() => handleEditTask(index)}
+          // onDelete={() => handleDeleteTask(index)}
+        />
+      ))}
     </div>
   );
 };
 
-export default observer(ShowTask);
+export default ShowTask;
