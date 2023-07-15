@@ -1,6 +1,9 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
+import FormStore from "../../store/FormStore";
+import { observer } from "mobx-react-lite";
+import { useTasks } from "@/store/Tasks";
 
 interface TaskProps {
   num: number;
@@ -13,23 +16,31 @@ interface FormData {
   }[];
 }
 
-const Task = ({ num }: TaskProps) => {
-  const { register, handleSubmit, reset, control } = useForm<FormData>();
+const CreateTask = ({ num }: TaskProps) => {
+  const [task, setTask] = useState({});
+
+  const { register, handleSubmit, control } = useForm<FormData>();
+
   const { fields, append, remove } = useFieldArray({
     control,
     name: "tasks",
   });
 
+  const { handleCreateTask } = useTasks();
 
-const onSubmit = (data: FormData) => {
-    console.log(data);
+  const onSubmit = (data: any) => {
+    handleCreateTask(data);
+    console.log("Created Task",data);
   };
 
   return (
     <form className="max-w-md mx-auto" onSubmit={handleSubmit(onSubmit)}>
       {fields.map((field, index) => (
-        <div key={field.id}>
-          <div className="flex flex-row items-end mb-4">
+        <div
+          key={field.id}
+          className="my-6 drop-shadow-lg hover:drop-shadow-2xl"
+        >
+          <div className="flex flex-row items-end mb-4 py-4">
             <label
               htmlFor={`title[${index}]`}
               className="block text-md mx-4 font-bold mb-2"
@@ -58,13 +69,13 @@ const onSubmit = (data: FormData) => {
             />
           </div>
 
-          <div className="flex justify-end">
+          <div className="flex justify-center pb-4">
             <button
               type="button"
               onClick={() => remove(index)}
               className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
             >
-              Remove
+              Delete
             </button>
           </div>
         </div>
@@ -92,4 +103,4 @@ const onSubmit = (data: FormData) => {
   );
 };
 
-export default Task;
+export default observer(CreateTask);
