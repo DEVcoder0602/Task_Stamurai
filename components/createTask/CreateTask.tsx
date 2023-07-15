@@ -3,11 +3,7 @@ import React, { useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import FormStore from "../../store/FormStore";
 import { observer } from "mobx-react-lite";
-import { useTasks } from "@/store/Tasks";
-
-interface TaskProps {
-  num: number;
-}
+import { useTaskContext } from "@/store/Tasks";
 
 interface FormData {
   tasks: {
@@ -16,7 +12,7 @@ interface FormData {
   }[];
 }
 
-const CreateTask = ({ num }: TaskProps) => {
+const CreateTask = () => {
   const [task, setTask] = useState({});
 
   const { register, handleSubmit, control } = useForm<FormData>();
@@ -26,11 +22,16 @@ const CreateTask = ({ num }: TaskProps) => {
     name: "tasks",
   });
 
-  const { handleCreateTask } = useTasks();
+  const { addTask } = useTaskContext();
 
-  const onSubmit = (data: any) => {
-    handleCreateTask(data);
-    console.log("Created Task",data);
+  const onSubmit = (data: FormData) => {
+    const tasks = data.tasks.map((task, index) => ({
+      id: index + 1,
+      title: task.title,
+      description: task.description,
+    }));
+    addTask(tasks);
+    // console.log("Created Tasks", tasks);
   };
 
   return (
