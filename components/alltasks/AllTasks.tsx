@@ -1,11 +1,13 @@
 import React from "react";
-import Task from "../task/Task";
+import CreateTask from "../createTask/CreateTask";
+import ShowTask from "../showTask/ShowTask";
 
 const AllTasks = () => {
   return (
     <div>
-      <Task num={1} />
+      <CreateTask num={1} />
       <h3 className="text-md">All Tasks</h3>
+      <ShowTask />
     </div>
   );
 };
