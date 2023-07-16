@@ -93,6 +93,8 @@ export interface Task {
 interface TaskContextProps {
   tasks: Task[];
   addTask: (task: Task[]) => void;
+  editTask: (taskId: number, updatedTask: Task) => void;
+  deleteTask: (taskId: number) => void;
 }
 
 const TaskContext = createContext<TaskContextProps | null>(null);
@@ -104,9 +106,23 @@ export const TaskProvider = ({ children }: { children: React.ReactNode }) => {
     setTasks([...tasks, ...task]);
   };
 
+  const editTask = (taskId: number, updatedTask: Task) => {
+    const updatedTasks = tasks.map((task) =>
+      task.id === taskId ? updatedTask : task
+    );
+    setTasks(updatedTasks);
+  };
+
+  const deleteTask = (taskId: number) => {
+    const updatedTasks = tasks.filter((task) => task.id !== taskId);
+    setTasks(updatedTasks);
+  };
+
   const value = {
     tasks,
     addTask,
+    editTask,
+    deleteTask,
   };
 
   return <TaskContext.Provider value={value}>{children}</TaskContext.Provider>;
