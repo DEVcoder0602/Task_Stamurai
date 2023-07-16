@@ -13,9 +13,7 @@ interface FormData {
 }
 
 const CreateTask = () => {
-  const [task, setTask] = useState({});
-
-  const { register, handleSubmit, control } = useForm<FormData>();
+  const { register, handleSubmit, control, reset } = useForm<FormData>();
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -32,6 +30,7 @@ const CreateTask = () => {
     }));
     addTask(tasks);
     // console.log("Created Tasks", tasks);
+    reset();
   };
 
   return (
